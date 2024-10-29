@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decorative Birthday Card</title>
+  <style>
+    /* Body Styles */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image: url('background.png'); /* Set your background image here */
+      background-size: cover; /* Cover the entire viewport */
+      background-position: center; /* Center the image */
+      background-repeat: no-repeat; /* Prevent the image from repeating */
+    }
+
+    /* Background Emojis */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="0" y="32" font-size="32">&#x1F389;</text><text x="40" y="32" font-size="32">&#x1F382;</text><text x="80" y="32" font-size="32">&#x1F370;</text></svg>'); /* Birthday emojis */
+      background-repeat: repeat;
+      opacity: 0.1; /* Set opacity for background */
+      z-index: 0; /* Behind everything */
+    }
+
+    .card {
+      width: 90%;
+      max-width: 350px;
+      height: 85%;
+      max-height: 500px;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      perspective: 1000px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      z-index: 1; /* On top of the background */
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for the card */
+    }
+
+    /* Each Page Styling */
+    .card-page {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Space between elements */
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: transform 0.6s ease, opacity 0.6s ease; /* Add transform transition */
+      border-radius: 15px;
+      color: #333;
+      opacity: 0; /* Start hidden */
+      transform: rotateY(0deg); /* Initial state */
+      text-align: center; /* Center align text on all pages */
+    }
+
+    .card-page.active {
+      opacity: 1; /* Show active page */
+      z-index: 1;
+      transform: rotateY(0deg); /* Facing the viewer */
+    }
+
+    .card-page.prev {
+      transform: rotateY(-180deg); /* Turn to the left */
+    }
+
+    .card-page.next {
+      transform: rotateY(180deg); /* Turn to the right */
+    }
+
+    .card-page::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("Priya.jpg");
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3; /* Default opacity for other pages */
+      z-index: -1;
+      border-radius: 15px;
+    }
+
+    .card-page-front::before {
+      opacity: 1; 
+    }
+
+    /* Front Page Text Styling */
+    .card-page-front h2, .card-page-front p {
+      color: black; /* Black font for front page text */
+      font-size: 1.5em; /* Reduced font size for front page */
+    }
+
+    .card-page h2 {
+      font-size: 2em; /* Increased font size */
+      margin: 0;
+      text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+      align-self: flex-start; /* Align heading to the top */
+      margin-bottom: 20px; /* Space below the heading */
+    }
+
+    .card-page p {
+      margin-top: 10px;
+      font-size: 1.1em;
+      line-height: 1.5;
+      text-align: center; /* Center align text */
+    }
+
+    .card-page button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff6b6b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+
+    .card-page button:hover {
+      background-color: #ff4a4a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <!-- Front Page -->
+    <div class="card-page card-page-front active" id="page0">
+      <h3>Happy Birthday PRIYA🎉</h3>
+      <p>Welcome to my birthday gift (Etho ennala mudinchathu)</p>
+      <div style="flex-grow: 1;"></div>
+      <button onclick="nextPage()">Next Page</button>
+    </div>
+
+    <!-- Second Page -->
+    <div class="card-page card-page-second" id="page1">
+      <h2 style="text-align: center;">A Little Message 🎈</h2>
+      <h3>Have a Great Birthday</h3>Be the same as you are and I often thought that it would be even better if were friends during our school days.</p>
+      <div style="flex-grow: 1;"></div>
+      <button onclick="nextPage()">Next Page</button>
+    </div>
+
+    <!-- Third Page -->
+    <div class="card-page card-page-third" id="page2">
+      <h2 style="text-align: center;">A small request 🙏</h2>
+      <h3>Chase your dreams</h3>
+      <p>Dont't ever try to move out of my life whether I will be successful or not. We can speak about everything and everyone.</p>
+      <div style="flex-grow: 1;"></div>
+      <button onclick="nextPage()">Next Page</button>
+    </div>
+
+    <!-- Fourth Page -->
+    <div class="card-page card-page-fourth" id="page3">
+      <h2 style="text-align: center;">Final Note 🤍</h2>
+      <h3>Fulfill your goals</h3>
+      <p>Who said you are not an angel in anyone's life, you are an angel in my life (A beautiful gundu angel) <br>Wishing you a happy birthday</p>
+      <div style="flex-grow: 1;"></div>
+      <button onclick="resetCard()">Back to Front</button>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = 0;
+    const totalPages = 4;
+
+    function nextPage() {
+      const currentPageElement = document.getElementById(`page${currentPage}`);
+      currentPageElement.classList.remove('active');
+      currentPageElement.classList.add('prev');
+
+      currentPage = (currentPage + 1) % totalPages;
+
+      const nextPageElement = document.getElementById(`page${currentPage}`);
+      nextPageElement.classList.add('active');
+      nextPageElement.classList.remove('next');
+
+      setTimeout(() => {
+        currentPageElement.classList.remove('prev');
+      }, 600);
+    }
+
+    function resetCard() {
+      const currentPageElement = document.getElementById(`page${currentPage}`);
+      currentPageElement.classList.remove('active');
+      currentPageElement.classList.add('prev');
+      currentPage = 0;
+      const nextPageElement = document.getElementById(`page${currentPage}`);
+      nextPageElement.classList.add('active');
+      nextPageElement.classList.remove('next');
+
+      setTimeout(() => {
+        currentPageElement.classList.remove('prev');
+      }, 600);
+    }
+  </script>
+</body>
+</html>
